@@ -1,0 +1,13 @@
+[package]
+name = "explora_map_poll"
+version = "0.1.0"
+edition = "2021"
+authors = ["Maarten Van Coile <maarten.vancoile@me.com>"]
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dark-light = "1.0.0"
+fastrand = "1.8.0"
+iced = "0.7.0"
