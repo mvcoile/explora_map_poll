@@ -23,11 +23,11 @@ impl App {
 
     fn refresh_seed(&mut self) {
         self.poll = format!(
-            "/poll topic: Next map vote!
-Option1: https://rustmaps.com/map/3500_{}
-Option2: https://rustmaps.com/map/3750_{}
-Option3: https://rustmaps.com/map/4000_{}
-Option4: https://rustmaps.com/map/4250_{}",
+            "/poll topic::world_map: Next map vote! :world_map:
+			option1:Map 3500: https://rustmaps.com/map/3500_{} 
+			option2:Map 3750: https://rustmaps.com/map/3750_{} 
+			option3:Map 4000: https://rustmaps.com/map/4000_{} 
+			option4:Map 4250: https://rustmaps.com/map/4250_{}",
             fastrand::u32(..2147483645),
             fastrand::u32(..2147483645),
             fastrand::u32(..2147483645),
@@ -43,7 +43,7 @@ fn main() -> iced::Result {
         default_text_size: 18,
         window: window::Settings {
             position: window::Position::Centered,
-            size: (450, 250),
+            size: (550, 250),
             min_size: Some((200, 250)),
             max_size: Some((800, 250)),
             ..Default::default()
