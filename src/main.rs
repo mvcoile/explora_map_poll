@@ -1,7 +1,7 @@
 use iced::theme::Theme;
-use iced::widget::{button, column, container, row, text, horizontal_rule};
-use iced::{window, Command, executor, clipboard};
-use iced::{Alignment, Element, Length, Application, Settings};
+use iced::widget::{button, column, container, horizontal_rule, row, text};
+use iced::{clipboard, executor, window, Command};
+use iced::{Alignment, Application, Element, Length, Settings};
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -24,10 +24,10 @@ impl App {
     fn refresh_seed(&mut self) {
         self.poll = format!(
             "/poll topic::world_map: Next map vote! :world_map:
-			option1:Map 3500: https://rustmaps.com/map/3500_{} 
-			option2:Map 3750: https://rustmaps.com/map/3750_{} 
-			option3:Map 4000: https://rustmaps.com/map/4000_{} 
-			option4:Map 4250: https://rustmaps.com/map/4250_{}",
+            option1:Map 3500: https://rustmaps.com/map/3500_{} 
+            option2:Map 3750: https://rustmaps.com/map/3750_{} 
+            option3:Map 4000: https://rustmaps.com/map/4000_{} 
+            option4:Map 4250: https://rustmaps.com/map/4250_{}",
             fastrand::u32(..2147483645),
             fastrand::u32(..2147483645),
             fastrand::u32(..2147483645),
@@ -67,10 +67,7 @@ impl Application for App {
     }
 
     fn new(_flags: ()) -> (App, Command<Self::Message>) {
-        (
-            App::new(),
-            Command::none()
-        )
+        (App::new(), Command::none())
     }
 
     fn title(&self) -> String {
@@ -86,7 +83,7 @@ impl Application for App {
     } //clipboard::write(self.poll)
 
     fn view(&self) -> Element<Message> {
-        let text = text(format!("{}", self.poll));
+        let text = text(self.poll.to_string());
         let refresh_button = button("refresh").on_press(Message::RefreshPressed);
         let copy_button = button("copy").on_press(Message::CopyPressed);
 
@@ -94,12 +91,9 @@ impl Application for App {
             column![
                 text.height(Length::Units(120)).width(Length::Fill),
                 horizontal_rule(38),
-                row![
-                    refresh_button,
-                    copy_button,
-                ]
-                .spacing(20)
-                .align_items(Alignment::End),
+                row![refresh_button, copy_button,]
+                    .spacing(20)
+                    .align_items(Alignment::End),
             ]
             .align_items(Alignment::End)
             .spacing(10),
@@ -111,5 +105,4 @@ impl Application for App {
         .center_y()
         .into()
     }
-
 }
