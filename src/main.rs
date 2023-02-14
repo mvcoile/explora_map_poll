@@ -22,17 +22,18 @@ impl App {
     }
 
     fn refresh_seed(&mut self) {
-        self.poll = format!(
-            "/poll topic::world_map: Next map vote! :world_map:
-            option1:Map 3500: https://rustmaps.com/map/3500_{} 
-            option2:Map 3750: https://rustmaps.com/map/3750_{} 
-            option3:Map 4000: https://rustmaps.com/map/4000_{} 
-            option4:Map 4250: https://rustmaps.com/map/4250_{}",
-            fastrand::u32(..2147483645),
-            fastrand::u32(..2147483645),
-            fastrand::u32(..2147483645),
-            fastrand::u32(..2147483645)
-        );
+        let mut temp = String::from("/poll topic::world_map: Next map vote! :world_map:");
+        for (i, size) in [3500, 3750, 4000, 4250].into_iter().enumerate() {
+            temp.push_str(
+                format!(
+                    "\noption{index}:Map {size}: https://rustmaps.com/map/{size}_{seed}",
+                    index = i + 1,
+                    seed = fastrand::u32(..2147483645)
+                )
+                .as_str(),
+            );
+        }
+        self.poll = temp;
     }
 }
 
