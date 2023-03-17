@@ -41,7 +41,7 @@ fn main() -> iced::Result {
     App::run(Settings {
         antialiasing: true,
         exit_on_close_request: true,
-        default_text_size: 18,
+        default_text_size: 18.0,
         window: window::Settings {
             position: window::Position::Centered,
             size: (550, 250),
@@ -90,7 +90,7 @@ impl Application for App {
 
         container(
             column![
-                text.height(Length::Units(120)).width(Length::Fill),
+                text.height(120.0).width(Length::Fill),
                 horizontal_rule(38),
                 row![refresh_button, copy_button,]
                     .spacing(20)

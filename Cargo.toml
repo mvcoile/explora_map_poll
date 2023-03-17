@@ -9,5 +9,5 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 dark-light = "1.0.0"
-fastrand = "1.8.0"
-iced = "0.7.0"
+fastrand = "1.9.0"
+iced = "0.8.0"
