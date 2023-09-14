@@ -45,8 +45,8 @@ fn main() -> iced::Result {
         window: window::Settings {
             position: window::Position::Centered,
             size: (550, 250),
-            min_size: Some((200, 250)),
-            max_size: Some((800, 250)),
+            min_size: Some((220, 280)),
+            max_size: Some((800, 280)),
             ..Default::default()
         },
         ..Default::default()
