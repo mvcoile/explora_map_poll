@@ -1,7 +1,7 @@
 use iced::theme::Theme;
 use iced::widget::{button, column, container, horizontal_rule, row, text};
 use iced::{clipboard, executor, window, Command};
-use iced::{Alignment, Application, Element, Length, Settings};
+use iced::{Alignment, Application, Element, Length, Settings, Size};
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -40,13 +40,13 @@ impl App {
 fn main() -> iced::Result {
     App::run(Settings {
         antialiasing: true,
-        exit_on_close_request: true,
-        default_text_size: 18.0,
+        default_text_size: 16.into(),
         window: window::Settings {
+            exit_on_close_request: true,
             position: window::Position::Centered,
-            size: (550, 250),
-            min_size: Some((220, 280)),
-            max_size: Some((800, 280)),
+            size: Size::new(550.0, 250.0),
+            min_size: Some(Size::new(220.0, 280.0)),
+            max_size: Some(Size::new(800.0, 280.0)),
             ..Default::default()
         },
         ..Default::default()
@@ -81,19 +81,19 @@ impl Application for App {
             Message::CopyPressed => return clipboard::write(String::from(&self.poll)),
         }
         Command::none()
-    } //clipboard::write(self.poll)
+    }
 
     fn view(&self) -> Element<Message> {
         let text = text(self.poll.to_string());
-        let refresh_button = button("refresh").on_press(Message::RefreshPressed);
-        let copy_button = button("copy").on_press(Message::CopyPressed);
+        let refresh_button = button("Refresh").on_press(Message::RefreshPressed);
+        let copy_button = button("Copy").on_press(Message::CopyPressed);
 
         container(
             column![
                 text.height(120.0).width(Length::Fill),
                 horizontal_rule(38),
                 row![refresh_button, copy_button,]
-                    .spacing(20)
+                    .spacing(18)
                     .align_items(Alignment::End),
             ]
             .align_items(Alignment::End)
