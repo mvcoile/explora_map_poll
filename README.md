@@ -1,3 +1,5 @@
+[![Rust](https://github.com/mvcoile/explora_map_poll/actions/workflows/rust.yml/badge.svg)](https://github.com/mvcoile/explora_map_poll/actions/workflows/rust.yml)
+
 # Rust Map Poll Generator
 
 Simple app that generates a random seed and created a link for rustmaps.com for use with Discord polls.
