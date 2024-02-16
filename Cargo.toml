@@ -1,9 +1,10 @@
 [package]
 name = "explora_map_poll"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Maarten Van Coile <maarten.vancoile@me.com>"]
 license = "MIT OR Apache-2.0"
+description = "Simple app that generates a random seed and created a link for rustmaps.com for use with Discord polls."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,3 +12,25 @@ license = "MIT OR Apache-2.0"
 dark-light = "1.0.0"
 fastrand = "2.0"
 iced = "0.12"
+
+[package.metadata.bundle]
+# This section is used by `cargo-bundle` to generate OS-specific bundles.
+
+# General bundle metadata
+name = "Explora Map Poll"
+identifier = "eu.maartenvancoile.explora_map_poll"
+icon = [
+    "resources/icons/icon16.png",
+    "resources/icons/icon32.png",
+    "resources/icons/icon64.png",
+    "resources/icons/icon128.png",
+    "resources/icons/icon256.png",
+    "resources/icons/icon512.png",
+    "resources/icons/icon512@2x.png",
+]
+short_description = "A poll generator."
+long_description = "Simple app that generates a random seed and created a link for rustmaps.com for use with Discord polls."
+
+[package.metadata.bundle.macos]
+# macOS-specific metadata
+category = "public.app-category.utilities"

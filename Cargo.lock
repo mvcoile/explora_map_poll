@@ -1009,7 +1009,7 @@ dependencies = [
 
 [[package]]
 name = "explora_map_poll"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "dark-light",
  "fastrand 2.0.1",
