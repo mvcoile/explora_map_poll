@@ -37,7 +37,7 @@ impl App {
                 .as_str(),
             );
             if self.staging {
-                temp.push_str("/staging".into());
+                temp.push_str("/staging");
             }
         }
         self.poll = temp;
