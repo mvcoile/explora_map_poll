@@ -9,9 +9,8 @@ description = "Simple app that generates a random seed and created a link for ru
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dark-light = "1.0.0"
-fastrand = "2.0"
-iced = "0.12"
+fastrand = "2.3"
+iced = "0.14"
 
 [package.metadata.bundle]
 # This section is used by `cargo-bundle` to generate OS-specific bundles.

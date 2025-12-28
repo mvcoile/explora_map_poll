@@ -1,7 +1,6 @@
-use iced::theme::Theme;
-use iced::widget::{button, column, container, horizontal_rule, row, text};
-use iced::{clipboard, executor, window, Command};
-use iced::{Alignment, Application, Element, Length, Settings, Size};
+use iced::widget::{button, column, container, row, rule, text};
+use iced::{clipboard, window, Task};
+use iced::{Alignment, Element, Length, Size};
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -38,72 +37,54 @@ impl App {
 }
 
 fn main() -> iced::Result {
-    App::run(Settings {
-        antialiasing: true,
-        default_text_size: 16.into(),
-        window: window::Settings {
+    iced::application(App::new, update, view)
+        .title("Explora Map Poll")
+        // .theme(Theme::Nord)
+        .window(window::Settings {
             exit_on_close_request: true,
             position: window::Position::Centered,
             size: Size::new(550.0, 250.0),
             min_size: Some(Size::new(220.0, 280.0)),
             max_size: Some(Size::new(800.0, 280.0)),
             ..Default::default()
-        },
-        ..Default::default()
-    })
+        })
+        .run()
 }
 
-impl Application for App {
-    type Message = Message;
-    type Executor = executor::Default;
-    type Flags = ();
-    type Theme = Theme;
-
-    fn theme(&self) -> Theme {
-        match dark_light::detect() {
-            dark_light::Mode::Dark => Theme::Dark,
-            dark_light::Mode::Light => Theme::Light,
-            dark_light::Mode::Default => Theme::Light,
+fn update(app: &mut App, message: Message) -> Task<Message> {
+    match message {
+        Message::RefreshPressed => {
+            app.refresh_seed();
+            Task::none()
         }
+        Message::CopyPressed => clipboard::write(app.poll.clone()),
     }
+}
 
-    fn new(_flags: ()) -> (App, Command<Self::Message>) {
-        (App::new(), Command::none())
-    }
+fn view(app: &App) -> Element<'_, Message> {
+    let text = text(app.poll.to_string());
+    let refresh_button = button("Refresh")
+        .style(button::secondary)
+        .on_press(Message::RefreshPressed);
+    let copy_button = button("Copy")
+        .style(button::primary)
+        .on_press(Message::CopyPressed);
 
-    fn title(&self) -> String {
-        String::from("Explora Map Poll")
-    }
-
-    fn update(&mut self, message: Message) -> iced::Command<Message> {
-        match message {
-            Message::RefreshPressed => self.refresh_seed(),
-            Message::CopyPressed => return clipboard::write(String::from(&self.poll)),
-        }
-        Command::none()
-    }
-
-    fn view(&self) -> Element<Message> {
-        let text = text(self.poll.to_string());
-        let refresh_button = button("Refresh").on_press(Message::RefreshPressed);
-        let copy_button = button("Copy").on_press(Message::CopyPressed);
-
-        container(
-            column![
-                text.height(120.0).width(Length::Fill),
-                horizontal_rule(38),
-                row![refresh_button, copy_button,]
-                    .spacing(18)
-                    .align_items(Alignment::End),
-            ]
-            .align_items(Alignment::End)
-            .spacing(10),
-        )
-        .padding(20)
-        .height(Length::Fill)
-        .width(Length::Fill)
-        .center_x()
-        .center_y()
-        .into()
-    }
+    container(
+        column![
+            text.height(120.0).width(Length::Fill),
+            rule::horizontal(1),
+            row![refresh_button, copy_button,]
+                .spacing(18)
+                .align_y(Alignment::Center),
+        ]
+        .align_x(Alignment::End)
+        .spacing(10),
+    )
+    .padding(20)
+    .height(Length::Fill)
+    .width(Length::Fill)
+    .center_x(Length::Fill)
+    .center_y(Length::Fill)
+    .into()
 }
