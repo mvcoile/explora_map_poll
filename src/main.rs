@@ -1,4 +1,6 @@
-use iced::widget::{button, column, container, row, rule, text};
+use std::time::Duration;
+
+use iced::widget::{button, checkbox, column, container, row, text, tooltip};
 use iced::{clipboard, window, Task};
 use iced::{Alignment, Element, Length, Size};
 
@@ -6,17 +8,20 @@ use iced::{Alignment, Element, Length, Size};
 pub enum Message {
     RefreshPressed,
     CopyPressed,
+    StagingToggled(bool),
 }
 
 #[derive(Default)]
 pub struct App {
     poll: String,
+    staging: bool,
 }
 
 impl App {
     pub fn new() -> Self {
         let mut app = Self::default();
         app.refresh_seed();
+        app.staging = false;
         app
     }
 
@@ -31,6 +36,9 @@ impl App {
                 )
                 .as_str(),
             );
+            if self.staging {
+                temp.push_str("/staging".into());
+            }
         }
         self.poll = temp;
     }
@@ -43,7 +51,7 @@ fn main() -> iced::Result {
         .window(window::Settings {
             exit_on_close_request: true,
             position: window::Position::Centered,
-            size: Size::new(550.0, 250.0),
+            size: Size::new(650.0, 250.0),
             min_size: Some(Size::new(220.0, 280.0)),
             max_size: Some(Size::new(800.0, 280.0)),
             ..Default::default()
@@ -58,6 +66,11 @@ fn update(app: &mut App, message: Message) -> Task<Message> {
             Task::none()
         }
         Message::CopyPressed => clipboard::write(app.poll.clone()),
+        Message::StagingToggled(value) => {
+            app.staging = value;
+            app.refresh_seed();
+            Task::none()
+        }
     }
 }
 
@@ -69,17 +82,51 @@ fn view(app: &App) -> Element<'_, Message> {
     let copy_button = button("Copy")
         .style(button::primary)
         .on_press(Message::CopyPressed);
+    let staging_check = checkbox(app.staging)
+        .label("Staging Maps")
+        .on_toggle(Message::StagingToggled);
 
     container(
         column![
-            text.height(120.0).width(Length::Fill),
-            rule::horizontal(1),
-            row![refresh_button, copy_button,]
-                .spacing(18)
-                .align_y(Alignment::Center),
+            container(text.size(16))
+                .style(container::bordered_box)
+                .padding(10)
+                .height(Length::Fill)
+                .width(Length::Fill),
+            row![
+                tooltip(
+                    staging_check.width(Length::Fill),
+                    container("Check this box to enable staging maps.")
+                        .padding(10)
+                        .style(container::rounded_box)
+                        .style(container::warning),
+                    tooltip::Position::Top,
+                )
+                .delay(Duration::from_secs(1)),
+                tooltip(
+                    refresh_button,
+                    container("Get new random seeds for the 4 maps.")
+                        .padding(10)
+                        .style(container::rounded_box)
+                        .style(container::warning),
+                    tooltip::Position::Top,
+                )
+                .delay(Duration::from_secs(1)),
+                tooltip(
+                    copy_button,
+                    container("Copy the /poll text onto your clipboard.")
+                        .padding(10)
+                        .style(container::rounded_box)
+                        .style(container::warning),
+                    tooltip::Position::Top,
+                )
+                .delay(Duration::from_secs(1)),
+            ]
+            .spacing(18)
+            .align_y(Alignment::Center),
         ]
         .align_x(Alignment::End)
-        .spacing(10),
+        .spacing(20),
     )
     .padding(20)
     .height(Length::Fill)
