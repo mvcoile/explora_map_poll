@@ -1,0 +1,5 @@
+[build]
+target-dir = "target.tmp"         # iCloud safe path (*.tmp is ignored).
+
+[profile.release]
+#debug = true
