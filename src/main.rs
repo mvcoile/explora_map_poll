@@ -46,7 +46,7 @@ impl App {
 
 fn main() -> iced::Result {
     iced::application(App::new, update, view)
-        .title("Explora Map Poll")
+        .title("Rust Map Poll for Discord")
         // .theme(Theme::Nord)
         .window(window::Settings {
             exit_on_close_request: true,
