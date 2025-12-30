@@ -1,5 +1,6 @@
 [build]
-target-dir = "target.tmp"         # iCloud safe path (*.tmp is ignored).
+# iCloud safe path (*.tmp is ignored).
+target-dir = "target.tmp"
 
-[profile.release]
-#debug = true
+[rust-analyzer]
+cargo.targetDir = true

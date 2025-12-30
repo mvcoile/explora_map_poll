@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use iced::widget::{button, checkbox, column, container, row, text, tooltip};
+use iced::widget::{button, checkbox, column, container, row, space, text, tooltip};
 use iced::{clipboard, window, Task};
 use iced::{Alignment, Element, Length, Size};
 
@@ -86,16 +86,18 @@ fn view(app: &App) -> Element<'_, Message> {
         .label("Staging Maps")
         .on_toggle(Message::StagingToggled);
 
+    // To turn on debug grid, wrap the container (before the .into()) with the following:
+    // iced::Element::new(your_widget).explain(iced::Color::BLACK)
     container(
         column![
-            container(text.size(16))
+            container(text.size(16).height(Length::Fill).width(Length::Fill))
                 .style(container::bordered_box)
                 .padding(10)
                 .height(Length::Fill)
                 .width(Length::Fill),
             row![
                 tooltip(
-                    staging_check.width(Length::Fill),
+                    staging_check,
                     container("Check this box to enable staging maps.")
                         .padding(10)
                         .style(container::rounded_box)
@@ -103,6 +105,7 @@ fn view(app: &App) -> Element<'_, Message> {
                     tooltip::Position::Top,
                 )
                 .delay(Duration::from_secs(1)),
+                space().width(Length::Fill),
                 tooltip(
                     refresh_button,
                     container("Get new random seeds for the 4 maps.")
