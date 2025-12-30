@@ -4,7 +4,7 @@
 
 Simple app that generates a random seed and created a link for rustmaps.com for use with Discord polls.
 
-![Preview](resources/preview.png)
+![Preview](resources/preview2.png)
 
 ## Usage
 
