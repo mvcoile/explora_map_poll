@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use iced::widget::{button, checkbox, column, container, row, space, text, tooltip};
+use iced::widget::{button, checkbox, column, container, row, scrollable, space, text, tooltip};
 use iced::{clipboard, window, Task};
 use iced::{Alignment, Element, Length, Size};
 
@@ -52,8 +52,8 @@ fn main() -> iced::Result {
             exit_on_close_request: true,
             position: window::Position::Centered,
             size: Size::new(650.0, 250.0),
-            min_size: Some(Size::new(220.0, 280.0)),
-            max_size: Some(Size::new(800.0, 280.0)),
+            min_size: Some(Size::new(380.0, 200.0)),
+            max_size: Some(Size::new(850.0, 350.0)),
             ..Default::default()
         })
         .run()
@@ -90,11 +90,13 @@ fn view(app: &App) -> Element<'_, Message> {
     // iced::Element::new(your_widget).explain(iced::Color::BLACK)
     container(
         column![
-            container(text.size(16).height(Length::Fill).width(Length::Fill))
-                .style(container::bordered_box)
-                .padding(10)
-                .height(Length::Fill)
-                .width(Length::Fill),
+            container(scrollable(
+                text.size(16).height(Length::Fill).width(Length::Fill)
+            ))
+            .style(container::bordered_box)
+            .padding(10)
+            .height(Length::Fill)
+            .width(Length::Fill),
             row![
                 tooltip(
                     staging_check,
