@@ -1,6 +1,6 @@
 [package]
 name = "explora_map_poll"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 authors = ["Maarten Van Coile <maarten.vancoile@me.com>"]
 license = "MIT OR Apache-2.0"
@@ -14,8 +14,6 @@ iced = "0.14"
 
 [package.metadata.bundle]
 # This section is used by `cargo-bundle` to generate OS-specific bundles.
-
-# General bundle metadata
 name = "Explora Map Poll"
 identifier = "eu.maartenvancoile.explora_map_poll"
 icon = [
